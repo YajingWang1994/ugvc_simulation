@@ -1,0 +1,5 @@
+# Uses ISO units. For example, use 'm' for length.
+field:
+  length: 108                    # Use integer!   used in spawn_model_script
+  width: 70                      # Use integer!  used in spawn_model_script
+  
