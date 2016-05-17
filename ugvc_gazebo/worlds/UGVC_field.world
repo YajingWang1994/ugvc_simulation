@@ -118,6 +118,14 @@
         <static>true</static>
     </include>
 
+<!-- surus sim robot-->
+    <include>
+        <pose>-48.0138 -22.9995 0.116349 8e-06 -0.000288 -0.000427</pose>
+        <uri>model://surus_sim</uri>
+        <name>surus_sim</name>
+        <static>false</static>
+    </include>
+
 <!-- UGVC red box-->
     <include>
         <pose>-48.4796 -15 0 0 -0 0</pose>
