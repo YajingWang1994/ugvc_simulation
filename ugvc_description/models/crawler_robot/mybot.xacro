@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!-- Revolute-Revolute Manipulator -->
+<robot name="mybot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find mybot_description)/urdf/mybot.gazebo" />
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find mybot_description)/urdf/materials.xacro" />
+
+  <xacro:include filename="$(find mybot_description)/urdf/wheels.urdf.xacro" />
+
+  <xacro:include filename="$(find mybot_description)/urdf/sensors.urdf.xacro" />
+
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="mass" value="10" /> <!-- arbitrary value for mass -->
+  <xacro:property name="lx" value="1" /> <!-- Square dimensions (widthxwidth) of beams -->
+  <xacro:property name="ly" value="0.5" /> 
+  <xacro:property name="lz" value="0.2" /> 
+<!-- <wheels> -->
+  <xacro:property name="L" value="0.12" />
+  <xacro:property name="R" value="0.16" />  
+
+    <!-- Wheel Mounting Positions -->
+  <xacro:property name="wheelbase" value="0.6" />
+  <xacro:property name="track" value="0.64" />
+  <xacro:property name="wheel_vertical_offset" value="0.2" />
+
+  <xacro:property name="camera_link" value="0.05" /> <!-- Size of square 'camera' box -->
+  <xacro:property name="axel_offset" value="0.05" /> <!-- Space btw top of beam and the each joint -->
+
+  <!-- Used for fixing robot to Gazebo 'base_link' -->
+  <!-- Base Link -->
+  <link name="base_link">
+  <visual>
+      <origin xyz="0 0 ${lz}" rpy="0 0 0"/>
+      <geometry>
+      <box size="${lx} ${ly} ${lz}"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 ${lz}" rpy="0 0 0"/>
+      <geometry>
+	<box size="${lx} ${ly} ${lz}"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="${mass}"/>
+      <origin xyz="0 0 ${lz}" rpy="0 0 0"/>
+      <inertia
+	  ixx="${mass / 12.0 * (ly*ly + lz*lz)}" ixy="0.0" ixz="0.0"
+	  iyy="${mass / 12.0 * (lx*lx + lz*lz)}" iyz="0.0"
+	  izz="${mass / 12.0 * (lx*lx+ly*ly)}"/>
+    </inertial>
+  </link>
+
+    <!-- top_plate_link -->
+      <link name="top_plate_link">
+        <visual>
+          <origin xyz="0 0 ${lz}" rpy="0 0 0" />
+          <geometry>
+            <box size="${3*lx/4} ${3*ly/4} ${lz}" rpy="0 0 0"/>
+          </geometry>
+        </visual>
+        <collision>
+          <origin xyz="0 0 ${lz}" rpy="0 0 0"/>
+          <geometry>
+            <box size="${3*lx/4} ${3*ly/4} ${lz}" rpy="0 0 0"/>
+          </geometry>
+        </collision> 
+      </link>
+
+      <!-- Attach top plate -->
+      <joint name="top_plate_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="top_plate_link"/>
+        <origin xyz="0 0 ${lz}" rpy="0 0 0"/>
+      </joint>
+
+      <!-- top_top_link -->
+      <link name="top_top_link">
+        <visual>
+          <origin xyz="0 0 ${lz}" rpy="0 0 0" />
+          <geometry>
+            <box size="${lx/4} ${2*ly/4} ${2*lz/3}" rpy="0 0 0"/>
+          </geometry>
+        </visual>
+        <collision>
+          <origin xyz="0 0 ${lz}" rpy="0 0 0"/>
+          <geometry>
+            <box size="${lx/4} ${2*ly/4} ${2*lz/3}"  rpy="0 0 0"/>
+          </geometry>
+        </collision> 
+      </link> 
+
+      <!-- Attach top plate -->
+      <joint name="top_top_joint" type="fixed">
+        <parent link="top_plate_link" />
+        <child link="top_top_link"/>
+        <origin xyz="0 0 ${2*lz/3}" rpy="0 0 0"/>
+      </joint>
+
+      <!-- Base footprint is on the ground under the robot -->
+    <link name="base_footprint"/>
+    <joint name="base_footprint_joint" type="fixed">
+      <origin xyz="0 0 ${wheel_vertical_offset - R}" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="base_footprint" />
+    </joint>
+
+  <!-- mybot wheel macros -->
+    <xacro:mybot_wheel wheel_prefix="front_left">
+      <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:mybot_wheel>
+    <xacro:mybot_wheel wheel_prefix="front_right">
+      <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:mybot_wheel>
+    <xacro:mybot_wheel wheel_prefix="rear_left">
+      <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:mybot_wheel>
+    <xacro:mybot_wheel wheel_prefix="rear_right">
+      <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:mybot_wheel>
+
+<!-- laser -->
+    <xacro:laser prefix="base">
+        <origin xyz="$(optenv MYBOT_LMS1XX_XYZ 0.3 0 0.33)"
+                rpy="$(optenv MYBOT_LMS1XX_RPY 0.0 0.0 0.0)" />
+    </xacro:laser>
+
+    <!-- imu -->
+    <xacro:imu prefix="imu">
+            <origin xyz="$(optenv MYBOT_IMU_XYZ 0.19 0 0.149)" rpy="$(optenv MYBOT_IMU_RPY 0 -1.5708 3.1416)" />
+    </xacro:imu>
+
+    <!-- camera -->
+    <xacro:camera prefix="camera">
+        <origin xyz="0 0 ${lz}" rpy="0 0 0"/>
+  </xacro:camera>
+
+</robot>

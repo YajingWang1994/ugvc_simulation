@@ -120,9 +120,9 @@
 
 <!-- surus sim robot-->
     <include>
-        <pose>-48.0138 -22.9995 0.116349 8e-06 -0.000288 -0.000427</pose>
-        <uri>model://surus_sim</uri>
-        <name>surus_sim</name>
+        <pose>-48.7767 -23.2869 0.152751 2e-06 -9e-06 -0.007533</pose>
+        <uri>model://husky</uri>
+        <name>husky</name>
         <static>false</static>
     </include>
 
