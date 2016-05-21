@@ -1,0 +1,934 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name="ugvc_crawler_robot">
+    <static>false</static>
+
+<!--__________________body_____________________-->
+
+    <link name='chassis'>
+      <pose>0 0 .065 0 0 0</pose>
+      <inertial>
+      <mass>20</mass>
+      </inertial>
+
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>.32 .58 .13</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>.32 .58 .13</size>
+          </box>
+        </geometry>
+      </visual>
+<!--__________________/body_____________________-->    
+<!--__________________crawler_____________________-->
+
+      <visual name="right_crawler_visual">
+        <pose>-0.28 -0.29 0 1.5707 0 1.5707</pose>
+        <geometry>
+          <mesh>
+            <uri>model://ugvc_crawler_robot/dae/main_crawler.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <visual name="left_crawler_visual">
+        <pose>0.28 -0.29 0 -1.5707 0 1.5707</pose>
+        <geometry>
+          <mesh>
+            <uri>model://ugvc_crawler_robot/dae/main_crawler.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+</link>
+<!--__________________/body_____________________-->
+  
+<!--__________________right_crawler___________________-->
+
+<link name="right_rear_wheel"> 
+    <pose>-0.22 0.29 0.065 0 1.5707 0</pose>
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.12</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.12</length>
+            </cylinder>
+      </geometry>
+    </visual>
+  </link>
+
+<link name="right_front_wheel">
+    <pose>-0.22 -0.29 0.065 0 1.5707 0</pose>
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.12</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.12</length>
+            </cylinder>
+      </geometry>
+    </visual>
+  </link>
+
+
+<!--__________________/right_crawler___________________-->
+
+<!--__________________left_crawler___________________-->
+
+ <link name="left_rear_wheel">
+    <pose>0.22 0.29 0.065 0 1.5707 0</pose>
+
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.12</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+              <!--<slip1>0.5</slip1>
+              <slip2>0</slip2>-->
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.12</length>
+            </cylinder>
+      </geometry>
+    </visual>
+  </link>
+
+<link name="left_front_wheel">
+    <pose>0.22 -0.29 0.065 0 1.5707 0</pose>
+
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.12</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.12</length>
+            </cylinder>
+      </geometry>
+    </visual>
+  </link>
+
+
+<!--__________________/left_crawler___________________-->
+
+<!--__________________right_rear_arm__________________-->
+
+<link name="right_rear_arm">
+    <pose>-0.282 0.475 0.065 0 0 0</pose>
+    <collision name="collision">
+      <geometry>
+            <box>
+            <size>.004 .37 .13</size>
+            </box>
+      </geometry>
+    </collision>
+
+    <visual name="visual">
+      <geometry>
+            <box>
+            <size>.004 .37 .13</size>
+            </box>
+      </geometry>
+    </visual>
+
+
+      <visual name="crawler_visual">
+    <pose>-0.06 -0.185 0 1.5707 0 1.5707</pose>
+        <geometry>
+          <mesh>
+            <uri>model://ugvc_crawler_robot/dae/flipper_crawler.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+  </link>
+
+
+<link name="right_rear_arm_wheel_1">
+    <pose>-0.314 0.29 0.065 0 1.5707 0</pose>
+
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+    </visual>
+      <self_collide>0</self_collide>
+  </link>
+
+
+<link name="right_rear_arm_wheel_2">
+    <pose>-0.314 0.66 0.065 0 1.5707 0</pose>
+
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+    </visual>
+      <self_collide>0</self_collide>
+  </link>
+
+
+<!--__________________/right_rear_arm__________________-->
+
+<!--__________________left_rear_arm__________________-->
+
+<link name="left_rear_arm">
+    <pose>0.282 0.475 0.065 0 0 0</pose>
+    <collision name="collision">
+
+      <geometry>
+            <box>
+            <size>.004 .37 .13</size>
+            </box>
+      </geometry>
+    </collision>
+
+    <visual name="visual">
+
+      <geometry>
+            <box>
+            <size>.004 .37 .13</size>
+            </box>
+      </geometry>
+    </visual>
+
+      <visual name="crawler_visual">
+    <pose>0 -0.185 0 1.5707 0 1.5707</pose>
+        <geometry>
+          <mesh>
+            <uri>model://ugvc_crawler_robot/dae/flipper_crawler.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+  </link>
+
+<link name="left_rear_arm_wheel_1">
+    <pose>0.314 0.29 0.065 0 1.5707 0</pose>
+
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+    </visual>
+      <self_collide>0</self_collide>
+  </link>
+
+
+<link name="left_rear_arm_wheel_2">
+    <pose>0.314 0.66 0.065 0 1.5707 0</pose>
+
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+    </visual>
+      <self_collide>0</self_collide>
+  </link>
+
+
+<!--__________________/left_rear_arm__________________-->
+
+<!--__________________right_front_arm__________________-->
+
+<link name="right_front_arm">
+    <pose>-0.282 -0.475 0.065 0 0 0</pose>
+    <collision name="collision">
+      <geometry>
+            <box>
+            <size>.004 .37 .13</size>
+            </box>
+      </geometry>
+    </collision>
+
+    <visual name="visual">
+      <geometry>
+            <box>
+            <size>.004 .37 .13</size>
+            </box>
+      </geometry>
+    </visual>
+
+      <visual name="crawler_visual">
+    <pose>-0.06 -0.185 0 1.5707 0 1.5707</pose>
+        <geometry>
+          <mesh>
+            <uri>model://ugvc_crawler_robot/dae/flipper_crawler.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+  </link>
+
+<link name="right_front_arm_wheel_1">
+    <pose>-0.314 -0.29 0.065 0 1.5707 0</pose>
+
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+    </visual>
+      <self_collide>0</self_collide>
+  </link>
+
+
+<link name="right_front_arm_wheel_2">
+    <pose>-0.314 -0.66 0.065 0 1.5707 0</pose>
+
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+    </visual>
+      <self_collide>0</self_collide>
+  </link>
+
+
+
+<!--__________________/right_front_arm__________________-->
+
+<!--__________________left_front_arm__________________-->
+
+<link name="left_front_arm">
+    <pose>0.282 -0.475 0.065 0 0 0</pose>
+    <collision name="collision">
+      <geometry>
+            <box>
+            <size>.004 .37 .13</size>
+            </box>
+      </geometry>
+    </collision>
+
+    <visual name="visual">
+      <geometry>
+            <box>
+            <size>.004 .37 .13</size>
+            </box>
+      </geometry>
+    </visual>
+
+      <visual name="crawler_visual">
+    <pose>0 -0.185 0 1.5707 0 1.5707</pose>
+        <geometry>
+          <mesh>
+            <uri>model://ugvc_crawler_robot/dae/flipper_crawler.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+  </link>
+
+<link name="left_front_arm_wheel_1">
+    <pose>0.314 -0.29 0.065 0 1.5707 0</pose>
+
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+    </visual>
+      <self_collide>0</self_collide>
+  </link>
+
+
+<link name="left_front_arm_wheel_2">
+    <pose>0.314 -0.66 0.065 0 1.5707 0</pose>
+
+    <inertial>
+      <inertia>
+	<ixx>0.001</ixx>
+	<ixy>0</ixy>
+	<ixz>0</ixz>
+	<iyy>0.001</iyy>
+	<iyz>0</iyz>
+	<izz>0.001</izz>
+      </inertia>
+      <mass>1.0</mass>
+    </inertial>
+
+
+    <collision name="collision">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>.8</mu>
+              <mu2>.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+    </collision>
+    <visual name="visual">
+      <geometry>
+            <cylinder>
+              <radius>.065</radius>
+              <length>.06</length>
+            </cylinder>
+      </geometry>
+    </visual>
+      <self_collide>0</self_collide>
+  </link>
+
+
+
+<!--__________________/left_front_arm__________________-->
+
+
+
+<!--__________________joint___________________-->
+
+<joint type="revolute" name="right_rear">
+    <pose>0 0 0.06 0 0 0</pose>
+    <child>right_rear_wheel</child>
+    <parent>chassis</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+<joint type="revolute" name="right_front">
+    <pose>0 0 0.06 0 0 0</pose>
+    <child>right_front_wheel</child>
+    <parent>chassis</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+
+
+
+
+
+
+
+
+<joint type="revolute" name="left_rear">
+    <pose>0 0 -0.06 0 0 0</pose>
+    <child>left_rear_wheel</child>
+    <parent>chassis</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+  </joint>
+
+<joint type="revolute" name="left_front">
+    <pose>0 0 -0.06 0 0 0</pose>
+    <child>left_front_wheel</child>
+    <parent>chassis</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+
+
+
+
+
+
+
+
+<joint type="revolute" name="left_rear_arm">
+    <pose>0 -0.185 0.002 0 0 0</pose>
+    <child>left_rear_arm</child>
+    <parent>chassis</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+          <dynamics>
+            <damping>.5</damping>
+          </dynamics>
+          <limit>
+
+	  <velocity>1</velocity>
+
+          </limit>
+    </axis>
+</joint>
+
+<joint type="revolute" name="right_rear_arm">
+    <pose>0 -0.185 -0.002 0 0 0</pose>
+    <child>right_rear_arm</child>
+    <parent>chassis</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+          <dynamics>
+            <damping>.5</damping>
+          </dynamics>
+          <limit>
+
+	  <velocity>1</velocity>
+
+          </limit>
+    </axis>
+</joint>
+
+<joint type="revolute" name="left_front_arm">
+    <pose>0 0.185 0.002 0 0 0</pose>
+    <child>left_front_arm</child>
+    <parent>chassis</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+          <dynamics>
+            <damping>.5</damping>
+          </dynamics>
+          <limit>
+
+	  <velocity>1</velocity>
+
+          </limit>
+    </axis>
+</joint>
+
+<joint type="revolute" name="right_front_arm">
+    <pose>0 0.185 -0.002 0 0 0</pose>
+    <child>right_front_arm</child>
+    <parent>chassis</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+          <dynamics>
+            <damping>.5</damping>
+          </dynamics>
+          <limit>
+
+	  <velocity>1</velocity>
+
+          </limit>
+    </axis>
+</joint>
+
+<joint type="revolute" name="right_rear_arm_wheel_1">
+    <pose>0 0 0.03 0 0 0</pose>
+    <child>right_rear_arm_wheel_1</child>
+    <parent>right_rear_arm</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+<joint type="revolute" name="right_rear_arm_wheel_2">
+    <pose>0 0 0.03 0 0 0</pose>
+    <child>right_rear_arm_wheel_2</child>
+    <parent>right_rear_arm</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+
+<joint type="revolute" name="right_front_arm_wheel_1">
+    <pose>0 0 0.03 0 0 0</pose>
+    <child>right_front_arm_wheel_1</child>
+    <parent>right_front_arm</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+<joint type="revolute" name="right_front_arm_wheel_2">
+    <pose>0 0 0.03 0 0 0</pose>
+    <child>right_front_arm_wheel_2</child>
+    <parent>right_front_arm</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+
+
+<joint type="revolute" name="left_rear_arm_wheel_1">
+    <pose>0 0 -0.03 0 0 0</pose>
+    <child>left_rear_arm_wheel_1</child>
+    <parent>left_rear_arm</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+<joint type="revolute" name="left_rear_arm_wheel_2">
+    <pose>0 0 -0.03 0 0 0</pose>
+    <child>left_rear_arm_wheel_2</child>
+    <parent>left_rear_arm</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+<joint type="revolute" name="left_front_arm_wheel_1">
+    <pose>0 0 -0.03 0 0 0</pose>
+    <child>left_front_arm_wheel_1</child>
+    <parent>left_front_arm</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+<joint type="revolute" name="left_front_arm_wheel_2">
+    <pose>0 0 -0.03 0 0 0</pose>
+    <child>left_front_arm_wheel_2</child>
+    <parent>left_front_arm</parent>
+    <axis>
+      <xyz>1 0 0</xyz>
+<use_parent_model_frame>true</use_parent_model_frame>
+    </axis>
+</joint>
+
+
+
+<!--__________________/joint___________________-->
+
+
+
+  </model>
+</sdf>
