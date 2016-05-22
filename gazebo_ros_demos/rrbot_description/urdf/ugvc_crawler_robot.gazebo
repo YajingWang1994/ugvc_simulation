@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<robot>
+
+  <!-- ros_control plugin -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/rrbot</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+
+  <!-- Link1 -->
+  <gazebo reference="chassis">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <gazebo reference="right_main_front_wheel">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+ 
+  <gazebo reference="left_main_front_wheel">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="right_main_rear_wheel">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+ 
+  <gazebo reference="left_main_rear_wheel">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+<!--
+  <gazebo reference="ugvc_crawler_robot__right_front_wheel">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="ugvc_crawler_robot__left_front_wheel">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="ugvc_crawler_robot__left_rear_flipper">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <gazebo reference="ugvc_crawler_robot__left_rear_flipper_wheel_1">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="ugvc_crawler_robot__left_rear_flipper_wheel_2">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+-->
+</robot>
