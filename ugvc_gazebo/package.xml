@@ -17,7 +17,8 @@
   
   <build_depend>dynamic_reconfigure</build_depend>
   <build_depend>std_msgs</build_depend>
-  
+  <build_depend>gazebo_plugins</build_depend>
+  <run_depend>gazebo_plugins</run_depend>
   <run_depend>gazebo_ros</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>gazebo_ros_control</run_depend>
@@ -27,16 +28,8 @@
   
   <run_depend>dynamic_reconfigure</run_depend>
   <run_depend>std_msgs</run_depend>
-
-  <export>
-		<!--gazebo_ros gazebo_model_path="${prefix}/../ugvc_description/models" /-->
-  </export>
+  <run_depend>xacro</run_depend>
 
 </package>
 
-<!--
-    <gazebo_ros 
-      gazebo_plugin_path="${prefix}/lib" 
-      gazebo_model_path="/home/winston/workspace/nubot_gazebo_ws/src/nubot_common/nubot_description/models"
-			gazebo_media_path="/home/winston/workspace/nubot_gazebo_ws/src/nubot_common/nubot_description/models" />
--->
+
