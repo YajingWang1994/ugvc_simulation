@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<robot name="kylin_robot_gazebo" xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+  <xacro:include filename="$(find ugvc_description)/urdf/ugvc_crawler_robot.xacro" />
+  <xacro:include filename="$(find ugvc_gazebo)/urdf/ugvc_crawler_robot.gazebo.xacro" />
+
+  <!-- Gazebo plugin for ROS Control -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/ugvc_crawler_robot</robotNamespace>
+    </plugin>
+  </gazebo>
+
+  <xacro:kylin_robot />
+
+  <xacro:kylin_robot_gazebo />
+
+</robot>

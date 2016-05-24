@@ -2,10 +2,9 @@
 <robot>
 
   <!-- ros_control plugin -->
-  <gazebo>
+   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/rrbot</robotNamespace>
-      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <robotNamespace>/</robotNamespace>
     </plugin>
   </gazebo>
 
@@ -111,6 +110,9 @@
     <mu2>0.8</mu2>
     <material>Gazebo/Black</material>
   </gazebo>
+
+
+
 
 
 

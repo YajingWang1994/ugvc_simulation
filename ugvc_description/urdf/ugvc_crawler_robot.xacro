@@ -2,27 +2,28 @@
 <!--       simulation model of crawler robot in UGVC 2016         -->
 <robot name="ugvc_crawler_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<xacro:include filename="$(find rrbot_description)/urdf/ugvc_crawler_robot.gazebo" />
+	<xacro:include filename="$(find ugvc_description)/urdf/ugvc_crawler_robot.gazebo" />
 
 	<xacro:property name="PI" value="3.1415926535897931"/>
 
-  	<xacro:property name="chassis_mass" value="20" /> <!-- arbitrary value for mass -->
-  	<xacro:property name="wheel_mass" value="3" />
-  	<xacro:property name="flipper_mass" value="3" />
+  <xacro:property name="chassis_mass" value="20" /> <!-- arbitrary value for mass -->
+  <xacro:property name="wheel_mass" value="3" />
+  <xacro:property name="flipper_mass" value="3" />
 
-  	<xacro:property name="chassis_width" value="0.32" /> <!-- Square dimensions (widthxwidth) of beams -->
-  	<xacro:property name="chassis_length" value="0.58" />
-  	<xacro:property name="chassis_thickness" value="0.1" />
-  	<xacro:property name="flipper_length" value="0.37" />
-  	<xacro:property name="flipper_width" value="0.1" />
-  	<xacro:property name="flipper_thickness" value="0.04" />
+  <xacro:property name="chassis_width" value="0.32" />
+  <xacro:property name="chassis_length" value="0.58" />
+  <xacro:property name="chassis_thickness" value="0.1" />
 
-
-  	<xacro:property name="wheel_radius" value="0.065" />
-  	<xacro:property name="main_wheel_length" value="0.12" />
-  	<xacro:property name="flipper_wheel_length" value="0.06" />
+  <xacro:property name="flipper_length" value="0.37" />
+  <xacro:property name="flipper_width" value="0.1" />
+  <xacro:property name="flipper_thickness" value="0.04" />
 
 
+  <xacro:property name="wheel_radius" value="0.065" />
+  <xacro:property name="main_wheel_length" value="0.12" />
+  <xacro:property name="flipper_wheel_length" value="0.06" />
+
+  <xacro:macro name="kylin_robot">
 
   <link name="chassis">
     <inertial>
@@ -36,12 +37,25 @@
         <box size="${chassis_width} ${chassis_length} ${chassis_thickness}"/>
       </geometry>
     </collision>
-    <visual name="visual">
+    <visual name="visual_chassis">
       <origin rpy="0  0  0" xyz="0 0 ${wheel_radius}"/>
       <geometry>
         <box size="${chassis_width} ${chassis_length} ${chassis_thickness}"/>
       </geometry>
     </visual>
+    <visual name="left_crawler_visual">
+        <origin rpy="${PI/2}  0  ${PI/2}" xyz="${-chassis_width/2-main_wheel_length} ${-chassis_length/2} ${wheel_radius}"/>
+        <geometry>
+          <mesh filename="package://ugvc_description/meshes/main_crawler.dae" />
+        </geometry>
+      </visual>
+
+      <visual name="right_crawler_visual">
+        <origin rpy="${-PI/2}  0  ${PI/2}" xyz="${chassis_width/2+main_wheel_length} ${-chassis_length/2} ${wheel_radius}"/>
+        <geometry>
+          <mesh filename="package://ugvc_description/meshes/main_crawler.dae" />
+        </geometry>
+      </visual>
   </link>
 
   <joint name="right_main_front_wheel" type="continuous">
@@ -64,12 +78,14 @@
         <cylinder length="${main_wheel_length}" radius="${wheel_radius}"/>
       </geometry>
     </collision>
+
     <visual name="visual">
       <origin rpy="0 ${PI/2} 0" xyz="0 0 0"/>
       <geometry>
         <cylinder length="${main_wheel_length}" radius="${wheel_radius}"/>
       </geometry>
     </visual>
+
   </link>
 
   <joint name="left_main_front_wheel" type="continuous">
@@ -92,12 +108,14 @@
         <cylinder length="${main_wheel_length}" radius="${wheel_radius}"/>
       </geometry>
     </collision>
+
     <visual name="visual">
       <origin rpy="0 ${PI/2} 0" xyz="0 0 0"/>
       <geometry>
         <cylinder length="${main_wheel_length}" radius="${wheel_radius}"/>
       </geometry>
     </visual>
+
   </link>
 
   <joint name="right_main_rear_wheel" type="continuous">
@@ -120,12 +138,14 @@
         <cylinder length="${main_wheel_length}" radius="${wheel_radius}"/>
       </geometry>
     </collision>
+
     <visual name="visual">
       <origin rpy="0 ${PI/2} 0" xyz="0 0 0"/>
       <geometry>
         <cylinder length="${main_wheel_length}" radius="${wheel_radius}"/>
       </geometry>
     </visual>
+
   </link>
 
   <joint name="left_main_rear_wheel" type="continuous">
@@ -148,12 +168,14 @@
         <cylinder length="${main_wheel_length}" radius="${wheel_radius}"/>
       </geometry>
     </collision>
+
     <visual name="visual">
       <origin rpy="0 ${PI/2} 0" xyz="0 0 0"/>
       <geometry>
         <cylinder length="${main_wheel_length}" radius="${wheel_radius}"/>
       </geometry>
     </visual>
+
   </link>
 
   <joint name="right_front_flipper" type="revolute">
@@ -495,179 +517,49 @@
     </visual>
   </link>
   
+  <transmission name="right_main_front_wheel_trans" type="SimpleTransmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="right_main_front_wheel_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="right_main_front_wheel">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+  </transmission>
+
+  <transmission name="left_main_front_wheel_trans" type="SimpleTransmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="left_main_front_wheel_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="left_main_front_wheel">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+  </transmission>
+
+  <transmission name="right_main_rear_wheel_trans" type="SimpleTransmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="right_main_rear_wheel_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="right_main_rear_wheel">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+  </transmission>
 
 
-
-  <!--joint name="ugvc_crawler_robot__left_rear" type="continuous">
-    <parent link="ugvc_crawler_robot__chassis"/>
-    <child link="ugvc_crawler_robot__left_rear_wheel"/>
-    <origin rpy="0      1.5707  0" xyz="0.16     0.28999  0.06499"/>
-    <axis xyz="9.00000000e-05   0.00000000e+00   1.00000000e+00"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-  </joint>
-
-  <link name="ugvc_crawler_robot__left_rear_wheel">Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-    <inertial>
-      <mass value="1.0"/>
-      <origin rpy="0  0  0" xyz="0    0    0.06"/>
-      <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0"/>
-    </inertial>
-    <collision name="ugvc_crawler_robot__collision">
-      <origin rpy="0  0  0" xyz="0    0    0.06"/>
-      <geometry>
-        <cylinder length=".12" radius=".065"/>
-      </geometry>
-    </collision>
-    <visual name="ugvc_crawler_robot__visual">
-      <origin rpy="0  0  0" xyz="0    0    0.06"/>
-      <geometry>
-        <cylinder length=".12" radius=".065"/>
-      </geometry>
-    </visual>
-  </link>
-
-  <joint name="ugvc_crawler_robot__right_front" type="continuous">
-    <parent link="ugvc_crawler_robot__chassis"/>
-    <child link="ugvc_crawler_robot__right_front_wheel"/>
-    <origin rpy="0      1.5707  0" xyz="-0.16    -0.28999  0.065"/>
-    <axis xyz="9.00000000e-05   0.00000000e+00   1.00000000e+00"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-  </joint>
-
-  <link name="ugvc_crawler_robot__right_front_wheel">
-    <inertial>
-      <mass value="1.0"/>
-      <origin rpy="0  0  0" xyz="0    0   -0.06"/>
-      <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0"/>
-    </inertial>
-    <collision name="ugvc_crawler_robot__collision">
-      <origin rpy="0  0  0" xyz="0    0   -0.06"/>
-      <geometry>
-        <cylinder length=".12" radius=".065"/>
-      </geometry>
-    </collision>
-    <visual name="ugvc_crawler_robot__visual">
-      <origin rpy="0  0  0" xyz="0    0   -0.06"/>
-      <geometry>
-        <cylinder length=".12" radius=".065"/>
-      </geometry>
-    </visual>
-  </link>
-
-  <joint name="ugvc_crawler_robot__left_front" type="continuous">
-    <parent link="ugvc_crawler_robot__chassis"/>
-    <child link="ugvc_crawler_robot__left_front_wheel"/>
-    <origin rpy="0      1.5707  0" xyz="0.16    -0.28999  0.06499"/>
-    <axis xyz="9.00000000e-05   0.00000000e+00   1.00000000e+00"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-  </joint>
-
-  <link name="ugvc_crawler_robot__left_front_wheel">
-    <inertial>
-      <mass value="1.0"/>
-      <origin rpy="0  0  0" xyz="0    0    0.06"/>
-      <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0"/>
-    </inertial>
-    <collision name="ugvc_crawler_robot__collision">
-      <origin rpy="0  0  0" xyz="0    0    0.06"/>
-      <geometry>
-        <cylinder length=".12" radius=".065"/>
-      </geometry>
-    </collision>
-    <visual name="ugvc_crawler_robot__visual">
-      <origin rpy="0  0  0" xyz="0    0    0.06"/>
-      <geometry>
-        <cylinder length=".12" radius=".065"/>
-      </geometry>
-    </visual>
-  </link>
-
-  <joint name="ugvc_crawler_robot__left_rear_flipper" type="continuous">
-    <parent link="ugvc_crawler_robot__chassis"/>
-    <child link="ugvc_crawler_robot__left_rear_flipper"/>
-    <origin rpy="0  0  0" xyz="0.28199  0.28999  0.067"/>
-    <axis xyz="1  0  0"/>
-    <limit effort="0.0" lower="0.0" upper="0" velocity="0"/>
-  </joint>
-
-  <link name="ugvc_crawler_robot__left_rear_flipper">
-    <inertial>
-      <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0     0.185 -0.002"/>
-      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
-    </inertial>
-    <collision name="ugvc_crawler_robot__collision">
-      <origin rpy="0  0  0" xyz="0     0.185 -0.002"/>
-      <geometry>
-        <box size=".004 .37 .12"/>
-      </geometry>
-    </collision>
-    <visual name="ugvc_crawler_robot__visual">
-      <origin rpy="0  0  0" xyz="0     0.185 -0.002"/>
-      <geometry>
-        <box size=".004 .37 .12"/>
-      </geometry>
-    </visual>
-  </link>
-
-  <joint name="ugvc_crawler_robot__left_rear_flipper_wheel_1" type="continuous">
-    <parent link="ugvc_crawler_robot__chassis"/>
-    <child link="ugvc_crawler_robot__left_rear_flipper_wheel_1"/>
-    <origin rpy="0      1.5707  0" xyz="0.287  0.29    0.065"/>
-    <axis xyz="9.00000000e-05   0.00000000e+00   1.00000000e+00"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-  </joint>
-
-  <link name="ugvc_crawler_robot__left_rear_flipper_wheel_1">
-    <inertial>
-      <mass value="1.0"/>
-      <origin rpy="0  0  0" xyz="0    0    0.03"/>
-      <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0"/>
-    </inertial>
-    <collision name="ugvc_crawler_robot__collision">
-      <origin rpy="0  0  0" xyz="0     0    0.03"/>
-      <geometry>
-        <cylinder length=".06" radius=".065"/>
-      </geometry>
-    </collision>
-    <visual name="ugvc_crawler_robot__visual">
-      <origin rpy="0  0  0" xyz="0    0    0.03"/>
-      <geometry>
-        <cylinder length=".06" radius=".065"/>
-      </geometry>
-    </visual>
-  </link>
+  <transmission name="left_main_rear_wheel_trans" type="SimpleTransmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="left_main_rear_wheel_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="left_main_rear_wheel">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+  </transmission>
 
 
-  <joint name="ugvc_crawler_robot__left_rear_flipper_wheel_2" type="continuous">
-    <parent link="ugvc_crawler_robot__left_rear_flipper"/>
-    <child link="ugvc_crawler_robot__left_rear_flipper_wheel_2"/>
-    <origin rpy="0      1.5707  0" xyz="0.002  0.37  -0.002"/>
-    <axis xyz="9.00000000e-05   0.00000000e+00   1.00000000e+00"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-  </joint>
+</xacro:macro>>
 
-
-  <link name="ugvc_crawler_robot__left_rear_flipper_wheel_2">
-    <inertial>
-      <mass value="1.0"/>
-      <origin rpy="0  0  0" xyz="0    0    0.03"/>
-      <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0"/>
-    </inertial>
-    <collision name="ugvc_crawler_robot__collision">
-      <origin rpy="0  0  0" xyz="0    0    0.03"/>
-      <geometry>
-        <cylinder length=".06" radius=".065"/>
-      </geometry>
-    </collision>
-    <visual name="ugvc_crawler_robot__visual">
-      <origin rpy="0  0  0" xyz="0    0    0.03"/>
-      <geometry>
-        <cylinder length=".06" radius=".065"/>
-      </geometry>
-    </visual>
-  </link-->
+ 
 </robot>

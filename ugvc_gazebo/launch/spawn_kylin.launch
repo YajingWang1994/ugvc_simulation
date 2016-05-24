@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(env KYLIN_GAZEBO_DESCRIPTION)' " />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!-- Load Husky control information -->
+  <include file="$(find ugvc_control)/launch/control.launch"/>
+
+  <!-- Spawn robot in gazebo -->
+  <node name="spawn_kylin_model" pkg="gazebo_ros" type="spawn_model"
+    args="$(optenv ROBOT_INITIAL_POSE) -unpause -urdf -param robot_description -model mobile_base"/>
+
+</launch>

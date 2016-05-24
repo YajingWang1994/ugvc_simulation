@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   gazebo_ros  
   dynamic_reconfigure
+  roslaunch
 )
 
 find_package(Protobuf REQUIRED)
@@ -20,6 +21,8 @@ generate_dynamic_reconfigure_options(config/ugvc_gazebo.cfg)
 
 link_directories(${GAZEBO_LIBRARY_DIRS})
 include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
+
+roslaunch_add_file_check(launch)
 
 message("gazebo include path: ${GAZEBO_INCLUDE_DIRS}")
 
@@ -33,16 +36,10 @@ catkin_package(
     gazebo
 )
 
-#add_library(nubot_gazebo plugins/nubot_gazebo.cc
-#                         plugins/nubot_PID.cc
-#                         plugins/parabolic_transition_planning.cc)
-#target_link_libraries(nubot_gazebo ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} pthread)
-#add_dependencies(nubot_gazebo ${PROJECT_NAME}_gencfg)
+catkin_add_env_hooks(kylin_gazebo
+  SHELLS sh DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/env-hooks)
 
-#add_executable(nubot_teleop_keyboard plugins/nubot_teleop_keyboard.cc)
-#target_link_libraries(nubot_teleop_keyboard ${catkin_LIBRARIES})
-
-# include (FindPkgConfig)
-# if (PKG_CONFIG_FOUND)
-#	pkg_check_modules(GAZEBO gazebo)
-# endif()
+install(
+  DIRECTORY launch worlds urdf
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
