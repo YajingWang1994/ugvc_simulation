@@ -6,12 +6,12 @@
 
   <xacro:macro name="kylin_robot_gazebo">
 
-<!--
+
     <gazebo>
       <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
         <robotNamespace>/</robotNamespace>
         <updateRate>50.0</updateRate>
-        <bodyName>base_link</bodyName>
+        <bodyName>chassis</bodyName>
         <topicName>imu/data</topicName>
         <accelDrift>0.005 0.005 0.005</accelDrift>
         <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
@@ -21,7 +21,7 @@
         <headingGaussianNoise>0.005</headingGaussianNoise>
       </plugin>
     </gazebo>
-
+<!--
     <gazebo>
       <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
         <updateRate>40</updateRate>
